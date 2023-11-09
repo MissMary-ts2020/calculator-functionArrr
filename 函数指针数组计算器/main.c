@@ -21,13 +21,28 @@ int my_div(const int* a, const int* b) {
 
 	return *a / *b;
 }
+typedef int(*calc)(const int* a, const int* b);//尽量这两行放一起，并做好注释，避免歧义
+calc dotable[] = { my_add,my_sub,my_mul,my_div };//函数指针数组，又叫转移表
+calc* p_dotable = &dotable;//函数指针数组指针 - 指针，这个指针指向一个数组，这个数组里面的元素都是指针，这些指针指向的对象是函数
+
+void docalc(calc func) {
+	int x = 0, y = 0, result = 0;
+	printf("请输入两个数字,(num1,num2)>");
+	scanf("%d,%d", &x, &y);
+	fflush(stdin);//不规范
+	result = func(&x, &y);
+	printf("结果是%d\n", result);
+	return;
+}
+
+
 
 
 int main(void) {
-	typedef int(*calc)(const int* a, const int* b);
-	calc dotable[4] = { my_add,my_sub,my_mul,my_div };
+	
 
-	int x = 0, y = 0, input = 5,result=0;
+	int input = 5,flag=1;
+
 	do {
 		menu();
 		
@@ -41,11 +56,9 @@ int main(void) {
 		else if (0 == input) {
 			printf("再见\n");
 			break;
-		}
-		printf("请输入两个数字,(num1,num2)>");
-		scanf("%d,%d", &x, &y);
-		fflush(stdin);//不规范
-		result=dotable[input-1](&x, &y);
-		printf("结果是%d\n", result);
-	} while (1);
+		}//输入安全检查
+		
+		docalc(dotable[input-1]);
+
+	} while (flag);
 }
