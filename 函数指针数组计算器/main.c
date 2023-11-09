@@ -5,26 +5,26 @@ void menu() {
 	printf("1.加法\n2.减法\n3.乘法\n4.除法\n0.退出\n");
 }
 
-int my_add(int* a, int* b) {
+int my_add(const int* a, const int* b) {
 
 	return *a + *b;
 }
-int my_sub(int* a, int* b) {
+int my_sub(const int* a, const int* b) {
 
 	return *a - *b;
 }
-int my_mul(int* a, int* b) {
+int my_mul(const int* a, const int* b) {
 
 	return *a * *b;
 }
-int my_div(int* a, int* b) {
+int my_div(const int* a, const int* b) {
 
 	return *a / *b;
 }
 
 
 int main(void) {
-	typedef int(*calc)(int*, int*);
+	typedef int(*calc)(const int* a, const int* b);
 	calc dotable[4] = { my_add,my_sub,my_mul,my_div };
 
 	int x = 0, y = 0, input = 5,result=0;
